@@ -11,7 +11,7 @@ import { useUser } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const { user } = useUser();
+  const { user, loading } = useUser();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,11 +30,30 @@ const SignUp = () => {
     }
   };
 
-  useEffect(()=>{
-    if(user){
-        navigate('/dashboard')
+  useEffect(() => {
+    if (!loading && user) {
+      navigate("/dashboard");
     }
-  },[user,navigate])
+  }, [user, navigate]);
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
+  }
+
+  if (user) {
+    return null;
+  }
 
   return (
     <Card sx={{ maxWidth: 400, margin: "50px auto", padding: "20px" }}>

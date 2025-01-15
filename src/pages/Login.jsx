@@ -5,6 +5,7 @@ import {
   TextField,
   Typography,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import { login } from "../auth/auth";
 import { useState } from "react";
@@ -12,17 +13,17 @@ import { useUser } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { user } = useUser();
+  const { user, loading } = useUser();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (user) {
+    if (!loading && user) {
       navigate("/dashboard");
     }
-  }, [user, navigate]);
+  }, [user, loading, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -34,6 +35,25 @@ const Login = () => {
       setError(err);
     }
   };
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
+  }
+
+  if (user) {
+    return null;
+  }
 
   return (
     <Card sx={{ maxWidth: 400, margin: "50px auto", padding: "20px" }}>

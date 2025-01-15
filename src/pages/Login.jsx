@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -8,11 +8,21 @@ import {
 } from "@mui/material";
 import { login } from "../auth/auth";
 import { useState } from "react";
+import { useUser } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const { user } = useUser();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -7,8 +7,12 @@ import {
   Typography,
 } from "@mui/material";
 import { signUp } from "../auth/auth";
+import { useUser } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const { user } = useUser();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -25,6 +29,12 @@ const SignUp = () => {
       setError(error);
     }
   };
+
+  useEffect(()=>{
+    if(user){
+        navigate('/dashboard')
+    }
+  },[user,navigate])
 
   return (
     <Card sx={{ maxWidth: 400, margin: "50px auto", padding: "20px" }}>

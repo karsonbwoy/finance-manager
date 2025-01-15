@@ -30,7 +30,6 @@ const Login = () => {
     setError("");
     try {
       await login(email, password);
-      alert("Login successful");
     } catch (err) {
       setError(err);
     }

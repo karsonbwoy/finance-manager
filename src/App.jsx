@@ -13,6 +13,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -23,13 +24,15 @@ function App() {
         <Route
           path="dashboard"
           element={
-            <DashboardLayout />
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
           }
-          >
+        >
           <Route path="" element={<Dashboard />}></Route>
           <Route path="expenses" element={<Expenses />}></Route>
           <Route path="reports" element={<Reports />}></Route>
-          </Route>
+        </Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="*" element={<Navigate to="/login" />} />

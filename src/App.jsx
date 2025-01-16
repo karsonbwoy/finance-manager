@@ -20,11 +20,16 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route path="home" element={<Dashboard />}></Route>
+        <Route
+          path="dashboard"
+          element={
+            <DashboardLayout />
+          }
+          >
+          <Route path="" element={<Dashboard />}></Route>
           <Route path="expenses" element={<Expenses />}></Route>
           <Route path="reports" element={<Reports />}></Route>
-        </Route>
+          </Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="*" element={<Navigate to="/login" />} />

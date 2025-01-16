@@ -11,7 +11,12 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
+import PersonAddAlt1OutlinedIcon from "@mui/icons-material/PersonAddAlt1Outlined";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../auth/auth";
 import { useUser } from "../context/UserContext";
@@ -50,7 +55,7 @@ const Navbar = () => {
         {user ? (
           <>
             <ListItem button onClick={() => navigate("/dashboard")}>
-              <ListItemText primary="Dashboard" />
+              <ListItemText primary="My finances" />
             </ListItem>
             <ListItem button onClick={handleLogout}>
               <ListItemText primary="Logout" />
@@ -74,32 +79,51 @@ const Navbar = () => {
     <>
       <AppBar
         position="fixed"
-        sx={{ backgroundColor: "#1976d2", borderRadius: "8px" }}
+        sx={{ display: "flex", backgroundColor: "#1976d2", borderRadius: "8px" }}
       >
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{ ml:{ xs: 0, md: 24 }, flexGrow: 1}}>
             Finance Manager
           </Typography>
-          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
-            <Button color="inherit" onClick={() => navigate("/")}>
-              Home
+          <Box sx={{ display: { xs: "none", md: "flex" }}}>
+            <Button
+              color="inherit"
+              onClick={() => navigate("/")}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              <HomeIcon />
+              <Typography variant="body1" sx={{ ml: 1 }}>
+                Home
+              </Typography>
             </Button>
             {user ? (
               <>
                 <Button color="inherit" onClick={() => navigate("/dashboard")}>
-                  Dashboard
+                  <DashboardIcon />
+                  <Typography variant="body1" sx={{ ml: 1 }}>
+                    My finances
+                  </Typography>
                 </Button>
                 <Button color="inherit" onClick={handleLogout}>
-                  Logout
+                  <LogoutIcon />
+                  <Typography variant="body1" sx={{ ml: 1 }}>
+                    Logout
+                  </Typography>
                 </Button>
               </>
             ) : (
               <>
                 <Button color="inherit" onClick={() => navigate("/login")}>
-                  Login
+                  <LoginIcon />
+                  <Typography variant="body1" sx={{ ml: 1 }}>
+                    Login
+                  </Typography>
                 </Button>
                 <Button color="inherit" onClick={() => navigate("/signup")}>
-                  Sign Up
+                  <PersonAddAlt1OutlinedIcon />
+                  <Typography variant="body1" sx={{ ml: 1 }}>
+                    Sign Up
+                  </Typography>
                 </Button>
               </>
             )}
@@ -109,7 +133,7 @@ const Navbar = () => {
             aria-label="open drawer"
             edge="start"
             onClick={toggleDrawer(true)}
-            sx={{ display: { xs: "block", md: "none" }, outline: 'none' }}
+            sx={{ display: { xs: "block", md: "none" }, outline: "none" }}
           >
             <MenuIcon />
           </IconButton>

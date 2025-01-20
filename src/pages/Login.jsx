@@ -31,7 +31,7 @@ const Login = () => {
     try {
       await login(email, password);
     } catch (err) {
-      setError(err);
+      setError("Invalid credentials!");
     }
   };
 
@@ -60,20 +60,27 @@ const Login = () => {
         <Typography variant="h5" component="div" gutterBottom>
           Login
         </Typography>
+        {error && <Typography color="error">{error}</Typography>}
         <form onSubmit={handleLogin}>
           <TextField
             fullWidth
             label="Email"
             type="email"
             margin="normal"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setError("");
+              return setEmail(e.target.value);
+            }}
           />
           <TextField
             fullWidth
             label="Password"
             type="password"
             margin="normal"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setError("");
+              return setPassword(e.target.value);
+            }}
           />
           <Button type="submit" variant="contained" color="primary" fullWidth>
             Login

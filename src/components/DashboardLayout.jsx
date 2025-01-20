@@ -19,7 +19,7 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState(0);
   return (
-    <Box sx={{ width: "100vw", display: "flex" }}>
+    <Box sx={{ width: "100%", display: "flex" }}>
       <CssBaseline />
       <Drawer
         variant="permanent"
@@ -61,7 +61,7 @@ const DashboardLayout = () => {
           elevation={3}
         >
           <BottomNavigation
-            sx={{display: { xs: "flex", md: "none" }}}
+            sx={{ display: { xs: "flex", md: "none" } }}
             showLabels
             value={value}
             onChange={(event, newValue) => {

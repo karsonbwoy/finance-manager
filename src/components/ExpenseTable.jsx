@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
   TableCell,
+  TableSortLabel,
   TableContainer,
   TableHead,
   TableRow,
   Paper,
   Typography,
+  Box,
 } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 
 const expenses = [
   {
@@ -34,7 +37,36 @@ const expenses = [
   },
 ];
 
+function descendingComparator(a, b, orderBy) {
+
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
 const ExpenseTable = () => {
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("category");
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    console.log(property);
+    setOrderBy(property);
+  };
+
+  let sortedExpenses = expenses.sort(getComparator(order, orderBy));
+
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -44,10 +76,38 @@ const ExpenseTable = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Category</TableCell>
-              <TableCell align="right">Amount</TableCell>
-              <TableCell align="right">Date</TableCell>
-              <TableCell>Description</TableCell>
+              <TableCell sortDirection={orderBy === "category" ? order : false}>
+                <TableSortLabel
+                  active={orderBy === "category"}
+                  direction={orderBy === "category" ? order : "asc"}
+                  onClick={(e) => handleRequestSort(e, "category")}
+                >
+                  Category
+                </TableSortLabel>
+              </TableCell>
+              <TableCell align="right">
+                <TableSortLabel
+                  active={orderBy === "amount"}
+                  direction={orderBy === "amount" ? order : "asc"}
+                  onClick={(e) => handleRequestSort(e, "amount")}
+                >
+                  Amount
+                </TableSortLabel>
+              </TableCell>
+              <TableCell align="right"><TableSortLabel
+                  active={orderBy === "date"}
+                  direction={orderBy === "date" ? order : "asc"}
+                  onClick={(e) => handleRequestSort(e, "date")}
+                >
+                  Date
+                </TableSortLabel></TableCell>
+              <TableCell><TableSortLabel
+                  active={orderBy === "description"}
+                  direction={orderBy === "description" ? order : "asc"}
+                  onClick={(e) => handleRequestSort(e, "description")}
+                >
+                  Description
+                </TableSortLabel></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

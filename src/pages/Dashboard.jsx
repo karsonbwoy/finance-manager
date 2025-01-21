@@ -1,6 +1,7 @@
 import { CardContent, Typography, Grid2, Card } from "@mui/material";
 import React from "react";
 import ExpenseChart from "../components/ExpenseChart";
+import QuickActions from "../components/QuickActions";
 
 const Dashboard = () => {
   return (
@@ -62,6 +63,9 @@ const Dashboard = () => {
             <ExpenseChart />
           </CardContent>
         </Card>
+      </Grid2>
+      <Grid2 item xs={12}>
+        <QuickActions />
       </Grid2>
     </Grid2>
   );

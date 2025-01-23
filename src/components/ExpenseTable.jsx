@@ -11,29 +11,9 @@ import {
   Typography,
 } from "@mui/material";
 
-const expenses = [
-  {
-    id: 1,
-    category: "Food",
-    amount: 150,
-    date: "2025-01-20",
-    description: "Groceries",
-  },
-  {
-    id: 2,
-    category: "Transport",
-    amount: 50,
-    date: "2025-01-19",
-    description: "Fuel",
-  },
-  {
-    id: 3,
-    category: "Entertainment",
-    amount: 200,
-    date: "2025-01-18",
-    description: "Concert tickets",
-  },
-];
+import { useUser } from "../context/UserContext";
+
+
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -47,21 +27,22 @@ function descendingComparator(a, b, orderBy) {
 
 function getComparator(order, orderBy) {
   return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
+  ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 const ExpenseTable = () => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("category");
+  const { userExpenses } = useUser();
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-
-  let sortedExpenses = expenses.sort(getComparator(order, orderBy));
+  
+  let sortedExpenses = userExpenses.sort(getComparator(order, orderBy));
 
   return (
     <>

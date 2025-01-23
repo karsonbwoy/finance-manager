@@ -58,7 +58,7 @@ const Dashboard = () => {
         <Card>
           <CardContent>
             <Typography variant="h6" gutterBottom>
-              Income vs. Expenses
+              Income vs. Expenses Mock-up
             </Typography>
             <ExpenseChart />
           </CardContent>

@@ -9,9 +9,7 @@ import {
   TableRow,
   Paper,
   Typography,
-  Box,
 } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
 
 const expenses = [
   {
@@ -60,7 +58,6 @@ const ExpenseTable = () => {
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
-    console.log(property);
     setOrderBy(property);
   };
 

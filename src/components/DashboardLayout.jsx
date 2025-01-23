@@ -55,6 +55,7 @@ const DashboardLayout = () => {
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Outlet />
         <Toolbar />
         <Paper
           sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
@@ -85,7 +86,6 @@ const DashboardLayout = () => {
             />
           </BottomNavigation>
         </Paper>
-        <Outlet />
       </Box>
     </Box>
   );

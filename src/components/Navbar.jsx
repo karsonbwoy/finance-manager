@@ -49,24 +49,24 @@ const Navbar = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        <ListItem button onClick={() => navigate("/")}>
+        <ListItem button = "true" onClick={() => navigate("/")}>
           <ListItemText primary="Home" />
         </ListItem>
         {user ? (
           <>
-            <ListItem button onClick={() => navigate("/dashboard")}>
+            <ListItem button = "true" onClick={() => navigate("/dashboard")}>
               <ListItemText primary="My finances" />
             </ListItem>
-            <ListItem button onClick={handleLogout}>
+            <ListItem button = "true" onClick={handleLogout}>
               <ListItemText primary="Logout" />
             </ListItem>
           </>
         ) : (
           <>
-            <ListItem button onClick={() => navigate("/login")}>
+            <ListItem button = "true" onClick={() => navigate("/login")}>
               <ListItemText primary="Login" />
             </ListItem>
-            <ListItem button onClick={() => navigate("/signup")}>
+            <ListItem button = "true" onClick={() => navigate("/signup")}>
               <ListItemText primary="Sign Up" />
             </ListItem>
           </>

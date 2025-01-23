@@ -6,7 +6,7 @@ import QuickActions from "../components/QuickActions";
 const Dashboard = () => {
   return (
     <Grid2 container spacing={2} padding={2}>
-      <Grid2 item xs={12} sm={6} md={3}>
+      <Grid2 item = "true" xs={12} sm={6} md={3}>
         <Card sx={{ width: "200px" }}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
@@ -18,7 +18,7 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </Grid2>
-      <Grid2 item xs={12} sm={6} md={3}>
+      <Grid2 item = "true" xs={12} sm={6} md={3}>
         <Card sx={{ width: "200px" }}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
@@ -30,7 +30,7 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </Grid2>
-      <Grid2 item xs={12} sm={6} md={3}>
+      <Grid2 item = "true" xs={12} sm={6} md={3}>
         <Card sx={{ width: "200px" }}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
@@ -42,7 +42,7 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </Grid2>
-      <Grid2 item xs={12} sm={6} md={3}>
+      <Grid2 item = "true" xs={12} sm={6} md={3}>
         <Card sx={{ width: "200px" }}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
@@ -54,7 +54,7 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </Grid2>
-      <Grid2 item xs={12}>
+      <Grid2 item = "true" xs={12}>
         <Card>
           <CardContent>
             <Typography variant="h6" gutterBottom>
@@ -64,7 +64,7 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </Grid2>
-      <Grid2 item xs={12}>
+      <Grid2 item = "true" xs={12}>
         <QuickActions />
       </Grid2>
     </Grid2>

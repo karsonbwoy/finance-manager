@@ -33,19 +33,19 @@ const DashboardLayout = () => {
         <Toolbar />
         <Box sx={{ overflow: "auto" }}>
           <List>
-            <ListItem button onClick={() => navigate("/dashboard/home")}>
+            <ListItem button = "true" onClick={() => navigate("/dashboard/home")}>
               <ListItemIcon>
                 <Home />
               </ListItemIcon>
               <ListItemText primary="Your Dashboard" />
             </ListItem>
-            <ListItem button onClick={() => navigate("/dashboard/expenses")}>
+            <ListItem button = "true" onClick={() => navigate("/dashboard/expenses")}>
               <ListItemIcon>
                 <AccountBalanceWallet />
               </ListItemIcon>
               <ListItemText primary="Expenses" />
             </ListItem>
-            <ListItem button onClick={() => navigate("/dashboard/reports")}>
+            <ListItem button = "true" onClick={() => navigate("/dashboard/reports")}>
               <ListItemIcon>
                 <BarChart />
               </ListItemIcon>

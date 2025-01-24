@@ -7,6 +7,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useUser } from "../context/UserContext";
 
 const style = {
   position: "absolute",
@@ -19,22 +20,32 @@ const style = {
 };
 
 export default function AddExpenseModal() {
+  const { userExpenses, setUserExpenses } = useUser();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [expenseDate, setExpenseDate] = React.useState(dayjs("01-01-2025"));
+  const [category, setCategory] = React.useState();
+  const [description, setDescription] = React.useState();
+  const [amount, setAmount] = React.useState();
+
   const handleAddExpense = (e) => {
     e.preventDefault();
     if (!category || !amount || !description) {
       console.log("Empty data!");
       return;
     }
-    console.log(expenseData);
+
+    let formateDate = expenseDate.format("YYYY-MM-DD");
+    let id = userExpenses.length + 1;
+    let expenseData = { id, category, amount, date: formateDate, description };
+
+
+    let newExpenses = [...userExpenses, expenseData];
+
+    setUserExpenses(newExpenses);
+    handleClose();
   };
-  const [expenseDate, setExpenseDate] = React.useState(dayjs("01-01-2025"));
-  const [category, setCategory] = React.useState();
-  const [description, setDescription] = React.useState();
-  const [amount, setAmount] = React.useState();
-  const expenseData = { category, amount, expenseDate, description };
 
   return (
     <div>
@@ -69,7 +80,7 @@ export default function AddExpenseModal() {
                 <DatePicker
                   sx={{ width: "100%", margin: "15px 0 7px 0" }}
                   value={expenseDate}
-                  onChange={(newValue) => setExpenseDate(newValue)}
+                  onChange={(e) => setExpenseDate(dayjs(e).format("YYYY-MM-DD"))}
                 />
               </LocalizationProvider>
               <TextField
@@ -85,7 +96,7 @@ export default function AddExpenseModal() {
                 variant="contained"
                 color="primary"
                 fullWidth
-                sx={{marginTop: '15px'}}
+                sx={{ marginTop: "15px" }}
               >
                 Add Expense
               </Button>

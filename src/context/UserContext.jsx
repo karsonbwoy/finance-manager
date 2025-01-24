@@ -7,7 +7,7 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [userExpenses,setUserxpenses] = useState([
+  const [userExpenses, setUserExpenses] = useState([
     {
       id: 1,
       category: "Food",
@@ -40,7 +40,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, loading, userExpenses }}>
+    <UserContext.Provider value={{ user, loading, userExpenses, setUserExpenses }}>
       {children}
     </UserContext.Provider>
   );

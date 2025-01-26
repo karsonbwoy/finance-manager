@@ -35,15 +35,6 @@ export const UserProvider = ({ children }) => {
   const userExpensesRef = collection(db, "users-expenses");
 
   useEffect(() => {
-    const getUserExpenses = async () => {
-      try {
-        const data = await getDocs(userExpensesRef);
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUserExpenses();
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
@@ -51,6 +42,22 @@ export const UserProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    const getUserExpenses = async () => {
+      try {
+        const data = await getDocs(userExpensesRef);
+        const filteredData = data.docs
+          .map((doc) => ({ ...doc.data() }))
+          .filter((el) => el.userUID === user.uid);
+        setUserExpenses(filteredData[0].expenses);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    if (user) {
+      getUserExpenses();
+    }
+  }, [user]);
   return (
     <UserContext.Provider
       value={{ user, loading, userExpenses, setUserExpenses }}

@@ -20,7 +20,7 @@ const style = {
 };
 
 export default function AddExpenseModal() {
-  const { userExpenses, setUserExpenses } = useUser();
+  const { userExpenses, updateUserExpenses } = useUser();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -40,10 +40,9 @@ export default function AddExpenseModal() {
     let id = userExpenses.length + 1;
     let expenseData = { id, category, amount, date: formateDate, description };
 
-
     let newExpenses = [...userExpenses, expenseData];
 
-    setUserExpenses(newExpenses);
+    updateUserExpenses(newExpenses);
     handleClose();
   };
 
@@ -80,7 +79,9 @@ export default function AddExpenseModal() {
                 <DatePicker
                   sx={{ width: "100%", margin: "15px 0 7px 0" }}
                   value={expenseDate}
-                  onChange={(e) => setExpenseDate(dayjs(e).format("YYYY-MM-DD"))}
+                  onChange={(e) =>
+                    setExpenseDate(dayjs(e).format("YYYY-MM-DD"))
+                  }
                 />
               </LocalizationProvider>
               <TextField

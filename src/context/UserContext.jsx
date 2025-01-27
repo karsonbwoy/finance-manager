@@ -1,38 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDoc, setDoc, doc } from "firebase/firestore";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [userExpenses, setUserExpenses] = useState([
-    // {
-    //   id: 1,
-    //   category: "Food",
-    //   amount: 150,
-    //   date: "2025-01-20",
-    //   description: "Groceries",
-    // },
-    // {
-    //   id: 2,
-    //   category: "Transport",
-    //   amount: 50,
-    //   date: "2025-01-19",
-    //   description: "Fuel",
-    // },
-    // {
-    //   id: 3,
-    //   category: "Entertainment",
-    //   amount: 200,
-    //   date: "2025-01-18",
-    //   description: "Concert tickets",
-    // },
-  ]);
-
-  const userExpensesRef = collection(db, "users-expenses");
+  const [userExpenses, setUserExpenses] = useState([]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -45,11 +21,13 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const getUserExpenses = async () => {
       try {
-        const data = await getDocs(userExpensesRef);
-        const filteredData = data.docs
-          .map((doc) => ({ ...doc.data() }))
-          .filter((el) => el.userUID === user.uid);
-        setUserExpenses(filteredData[0].expenses);
+        const userDocRef = doc(db, "users-expenses", user.uid);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          setUserExpenses(userDoc.data().expenses);
+        } else {
+          console.log("No such document!");
+        }
       } catch (err) {
         console.log(err);
       }
@@ -58,9 +36,20 @@ export const UserProvider = ({ children }) => {
       getUserExpenses();
     }
   }, [user]);
+
+  const updateUserExpenses = async (expenses) => {
+    setUserExpenses(expenses);
+    try {
+      const userDocRef = doc(db, "users-expenses", user.uid);
+      await setDoc(userDocRef, { expenses });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <UserContext.Provider
-      value={{ user, loading, userExpenses, setUserExpenses }}
+      value={{ user, loading, userExpenses, updateUserExpenses }}
     >
       {children}
     </UserContext.Provider>

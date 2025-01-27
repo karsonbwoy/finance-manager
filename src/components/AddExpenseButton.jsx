@@ -28,7 +28,7 @@ const AddExpenseButton = () => {
   const [category, setCategory] = React.useState();
   const [description, setDescription] = React.useState();
   const [amount, setAmount] = React.useState();
-  const { userExpenses, setUserExpenses } = useUser();
+  const { userExpenses, updateUserExpenses } = useUser();
 
   const handleAddExpense = (e) => {
     e.preventDefault();
@@ -41,10 +41,9 @@ const AddExpenseButton = () => {
     let id = userExpenses.length + 1;
     let expenseData = { id, category, amount, date: formateDate, description };
 
-
     let newExpenses = [...userExpenses, expenseData];
 
-    setUserExpenses(newExpenses);
+    updateUserExpenses(newExpenses);
     handleClose();
   };
 

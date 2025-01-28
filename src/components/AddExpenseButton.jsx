@@ -39,7 +39,13 @@ const AddExpenseButton = () => {
 
     let formateDate = expenseDate.format("YYYY-MM-DD");
     let id = userExpenses.length + 1;
-    let expenseData = { id, category, amount, date: formateDate, description };
+    let expenseData = {
+      id,
+      category,
+      amount: amount * 1, //makes amount type of number
+      date: formateDate,
+      description,
+    };
 
     let newExpenses = [...userExpenses, expenseData];
 
@@ -116,11 +122,3 @@ const AddExpenseButton = () => {
 };
 
 export default AddExpenseButton;
-
-function AddExpenseModal() {
-  return (
-    <div>
-      <Button onClick={handleOpen}>Add Expense</Button>
-    </div>
-  );
-}

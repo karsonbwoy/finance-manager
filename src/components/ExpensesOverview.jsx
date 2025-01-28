@@ -1,7 +1,10 @@
 import React from "react";
 import { Card, CardContent, Typography } from "@mui/material";
+import { useUser } from "../context/UserContext";
 
 const ExpenseOverview = () => {
+  const { sum } = useUser();
+
   return (
     <Card>
       <CardContent>
@@ -9,7 +12,7 @@ const ExpenseOverview = () => {
           Total Expenses This Month
         </Typography>
         <Typography variant="h4" color="error">
-          $1,200
+          ${sum}
         </Typography>
       </CardContent>
     </Card>

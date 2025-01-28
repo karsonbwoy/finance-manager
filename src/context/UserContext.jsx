@@ -9,6 +9,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userExpenses, setUserExpenses] = useState([]);
+  const sum = userExpenses.reduce((prev, acc) => prev + acc.amount, 0);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -49,7 +50,7 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, loading, userExpenses, updateUserExpenses }}
+      value={{ user, loading, userExpenses, updateUserExpenses, sum }}
     >
       {children}
     </UserContext.Provider>

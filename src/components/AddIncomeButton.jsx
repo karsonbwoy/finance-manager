@@ -19,26 +19,26 @@ const style = {
   p: 4,
 };
 
-export default function AddExpenseModal() {
+export default function AddIncomeButton() {
+  const { userIncome, updateUserIncome } = useUser();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [expenseDate, setExpenseDate] = React.useState(dayjs("01-01-2025"));
-  const [category, setCategory] = React.useState();
+  const [incomeDate, setIncomeDate] = React.useState(dayjs("01-01-2025"));
+  const category = "Income";
   const [description, setDescription] = React.useState();
   const [amount, setAmount] = React.useState();
-  const { userExpenses, updateUserExpenses } = useUser();
 
-  const handleAddExpense = (e) => {
+  const handleAddIncome = (e) => {
     e.preventDefault();
     if (!category || !amount || !description) {
       console.log("Empty data!");
       return;
     }
 
-    let formateDate = expenseDate.format("YYYY-MM-DD");
-    let id = userExpenses.length + 1;
-    let expenseData = {
+    let formateDate = incomeDate.format("YYYY-MM-DD");
+    let id = userIncome.length + 1;
+    let incomeData = {
       id,
       category,
       amount: amount * 1, //makes amount type of number
@@ -46,15 +46,17 @@ export default function AddExpenseModal() {
       description,
     };
 
-    let newExpenses = [...userExpenses, expenseData];
+    let newIncome = [...userIncome, incomeData];
 
-    updateUserExpenses(newExpenses);
+    updateUserIncome(newIncome);
     handleClose();
   };
 
   return (
     <div>
-      <Button onClick={handleOpen}>Add Expense</Button>
+      <Button onClick={handleOpen} variant="contained" color="secondary">
+        Add Income
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -64,16 +66,9 @@ export default function AddExpenseModal() {
         <Card sx={style}>
           <CardContent>
             <Typography variant="h5" component="div" gutterBottom>
-              Add Expense
+              Add Income
             </Typography>
-            <form onSubmit={handleAddExpense}>
-              <TextField
-                fullWidth
-                label="Category"
-                type="text"
-                margin="normal"
-                onChange={(e) => setCategory(e.target.value)}
-              />
+            <form onSubmit={handleAddIncome}>
               <TextField
                 fullWidth
                 label="Amount"
@@ -84,10 +79,8 @@ export default function AddExpenseModal() {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   sx={{ width: "100%", margin: "15px 0 7px 0" }}
-                  value={expenseDate}
-                  onChange={(e) =>
-                    setExpenseDate(dayjs(e).format("YYYY-MM-DD"))
-                  }
+                  value={incomeDate}
+                  onChange={(e) => setIncomeDate(dayjs(e).format("YYYY-MM-DD"))}
                 />
               </LocalizationProvider>
               <TextField
@@ -105,7 +98,7 @@ export default function AddExpenseModal() {
                 fullWidth
                 sx={{ marginTop: "15px" }}
               >
-                Add Expense
+                Add Income
               </Button>
             </form>
           </CardContent>

@@ -9,6 +9,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userExpenses, setUserExpenses] = useState([]);
+  const [userIncome, setUserIncome] = useState([]);
   const sum = userExpenses.reduce((prev, acc) => prev + acc.amount, 0);
 
   useEffect(() => {
@@ -48,9 +49,22 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const updateUserIncome = async (income) => {
+    setUserIncome(income);
+    console.log(income);
+  };
+
   return (
     <UserContext.Provider
-      value={{ user, loading, userExpenses, updateUserExpenses, sum }}
+      value={{
+        user,
+        loading,
+        userExpenses,
+        updateUserExpenses,
+        userIncome,
+        updateUserIncome,
+        sum,
+      }}
     >
       {children}
     </UserContext.Provider>

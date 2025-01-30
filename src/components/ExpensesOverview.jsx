@@ -12,7 +12,7 @@ const ExpenseOverview = () => {
           Total Expenses This Month
         </Typography>
         <Typography variant="h4" color="error">
-          ${sum}
+          {sum >= 0 ? `$${sum}` : `-$${sum * -1}`}
         </Typography>
       </CardContent>
     </Card>

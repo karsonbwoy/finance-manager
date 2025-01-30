@@ -13,8 +13,6 @@ import {
 
 import { useUser } from "../context/UserContext";
 
-
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -27,7 +25,7 @@ function descendingComparator(a, b, orderBy) {
 
 function getComparator(order, orderBy) {
   return order === "desc"
-  ? (a, b) => descendingComparator(a, b, orderBy)
+    ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
@@ -41,8 +39,8 @@ const ExpenseTable = () => {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-  
-  let sortedExpenses = userExpenses.sort(getComparator(order, orderBy));
+
+  let sortedExpenses = userExpenses?.sort(getComparator(order, orderBy));
 
   return (
     <>
@@ -92,10 +90,14 @@ const ExpenseTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedExpenses.map((expense) => (
+            {sortedExpenses?.map((expense) => (
               <TableRow key={expense.id}>
                 <TableCell>{expense.category}</TableCell>
-                <TableCell align="right">${expense.amount}</TableCell>
+                <TableCell align="right">
+                  {expense.amount >= 0
+                    ? `$${expense.amount}`
+                    : `-$${expense.amount * -1}`}
+                </TableCell>
                 <TableCell align="right">{expense.date}</TableCell>
                 <TableCell>{expense.description}</TableCell>
               </TableRow>

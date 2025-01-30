@@ -1,16 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../firebaseConfig";
-import { collection, getDoc, setDoc, doc } from "firebase/firestore";
+import { getDoc, setDoc, doc } from "firebase/firestore";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [userExpenses, setUserExpenses] = useState([]);
-  const [userIncome, setUserIncome] = useState([]);
-  const sum = userExpenses.reduce((prev, acc) => prev + acc.amount, 0);
+  const [userExpenses, setUserExpenses] = useState([]); //contains also incomes(positive amounts)
+  const sum = userExpenses?.reduce((prev, acc) => prev + acc.amount, 0) || 0;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -49,11 +48,6 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const updateUserIncome = async (income) => {
-    setUserIncome(income);
-    console.log(income);
-  };
-
   return (
     <UserContext.Provider
       value={{
@@ -61,8 +55,6 @@ export const UserProvider = ({ children }) => {
         loading,
         userExpenses,
         updateUserExpenses,
-        userIncome,
-        updateUserIncome,
         sum,
       }}
     >

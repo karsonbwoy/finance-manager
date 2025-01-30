@@ -32,22 +32,25 @@ const AddExpenseButton = () => {
 
   const handleAddExpense = (e) => {
     e.preventDefault();
+
     if (!category || !amount || !description) {
       console.log("Empty data!");
       return;
     }
 
     let formateDate = expenseDate.format("YYYY-MM-DD");
-    let id = userExpenses.length + 1;
+    let id = userExpenses?.length + 1 || 1;
     let expenseData = {
       id,
       category,
-      amount: amount * 1, //makes amount type of number
+      amount: amount * -1, //makes amount type of number and negative
       date: formateDate,
       description,
     };
 
-    let newExpenses = [...userExpenses, expenseData];
+    let newExpenses = userExpenses
+      ? [...userExpenses, expenseData]
+      : [expenseData];
 
     updateUserExpenses(newExpenses);
     handleClose();

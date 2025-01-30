@@ -20,7 +20,7 @@ const style = {
 };
 
 export default function AddIncomeButton() {
-  const { userIncome, updateUserIncome } = useUser();
+  const { userExpenses, updateUserExpenses } = useUser();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -37,7 +37,7 @@ export default function AddIncomeButton() {
     }
 
     let formateDate = incomeDate.format("YYYY-MM-DD");
-    let id = userIncome.length + 1;
+    let id = userExpenses.length + 1;
     let incomeData = {
       id,
       category,
@@ -46,9 +46,9 @@ export default function AddIncomeButton() {
       description,
     };
 
-    let newIncome = [...userIncome, incomeData];
+    let newExpenses = [...userExpenses, incomeData];
 
-    updateUserIncome(newIncome);
+    updateUserExpenses(newExpenses);
     handleClose();
   };
 

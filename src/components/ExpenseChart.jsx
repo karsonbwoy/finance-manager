@@ -8,14 +8,49 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-
-const data = [
-  { name: "Jan", Income: 4000, Expenses: 2400 },
-  { name: "Feb", Income: 3000, Expenses: 1398 },
-  { name: "Mar", Income: 5000, Expenses: 4300 },
-];
+import { useUser } from "../context/UserContext";
+import dayjs from "dayjs";
 
 const ExpenseChart = () => {
+  const { userExpenses } = useUser();
+  const calculateTotalIncome = (month) => {
+    return userExpenses
+      .filter(
+        (expense) =>
+          expense.category === "Income" &&
+          dayjs(expense.date).format("MMMM") === month
+      )
+      .reduce((total, expense) => total + expense.amount, 0);
+  };
+
+  const calculateTotalExpenses = (month) => {
+    return userExpenses
+      .filter(
+        (expense) =>
+          !expense.category === "Income" &&
+          dayjs(expense.date).format("MMMM") === month
+      )
+      .reduce((total, expense) => total + expense.amount, 0);
+  };
+
+  const data = [
+    {
+      name: "Jan",
+      Income: calculateTotalIncome("January"),
+      Expenses: calculateTotalExpenses("January"),
+    },
+    {
+      name: "Feb",
+      Income: calculateTotalIncome("February"),
+      Expenses: calculateTotalExpenses("February"),
+    },
+    {
+      name: "Mar",
+      Income: calculateTotalIncome("March"),
+      Expenses: calculateTotalExpenses("March"),
+    },
+  ];
+
   return (
     <BarChart width={600} height={300} data={data}>
       <CartesianGrid strokeDasharray="3 3" />

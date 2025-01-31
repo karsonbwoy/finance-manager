@@ -3,7 +3,7 @@ import { Card, CardContent, Typography } from "@mui/material";
 import { useUser } from "../context/UserContext";
 
 const ExpenseOverview = () => {
-  const { sum } = useUser();
+  const { expenses } = useUser();
 
   return (
     <Card>
@@ -12,7 +12,7 @@ const ExpenseOverview = () => {
           Total Expenses This Month
         </Typography>
         <Typography variant="h4" color="error">
-          {sum >= 0 ? `$${sum}` : `-$${sum * -1}`}
+          {expenses >= 0 ? `$${expenses}` : `-$${expenses * -1}`}
         </Typography>
       </CardContent>
     </Card>

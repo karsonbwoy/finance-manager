@@ -9,7 +9,15 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userExpenses, setUserExpenses] = useState([]); //contains also incomes(positive amounts)
-  const sum = userExpenses?.reduce((prev, acc) => prev + acc.amount, 0) || 0;
+  const expenses =
+    userExpenses?.reduce((prev, acc) => {
+      return acc.amount > 0 ? prev + 0 : prev + acc.amount;
+    }, 0) || 0;
+  const incomes =
+    userExpenses?.reduce((prev, acc) => {
+      return acc.amount < 0 ? prev + 0 : prev + acc.amount;
+    }, 0) || 0;
+  const balance = incomes + expenses || 0;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -40,6 +48,7 @@ export const UserProvider = ({ children }) => {
 
   const updateUserExpenses = async (expenses) => {
     setUserExpenses(expenses);
+
     try {
       const userDocRef = doc(db, "users-expenses", user.uid);
       await setDoc(userDocRef, { expenses });
@@ -55,7 +64,9 @@ export const UserProvider = ({ children }) => {
         loading,
         userExpenses,
         updateUserExpenses,
-        sum,
+        balance,
+        expenses,
+        incomes,
       }}
     >
       {children}

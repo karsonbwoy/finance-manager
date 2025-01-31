@@ -5,7 +5,7 @@ import QuickActions from "../components/QuickActions";
 import { useUser } from "../context/UserContext";
 
 const Dashboard = () => {
-  const { sum } = useUser();
+  const { balance, expenses, incomes } = useUser();
   return (
     <Grid2 container spacing={2} padding={2}>
       <Grid2 item="true" xs={12} sm={6} md={3}>
@@ -15,7 +15,7 @@ const Dashboard = () => {
               Current Balance
             </Typography>
             <Typography variant="h4" color="primary">
-              $5,000
+              {balance >= 0 ? `$${balance}` : `-$${balance * -1}`}
             </Typography>
           </CardContent>
         </Card>
@@ -27,7 +27,7 @@ const Dashboard = () => {
               Total Expenses
             </Typography>
             <Typography variant="h4" color="secondary">
-              ${sum}
+              ${expenses * -1}
             </Typography>
           </CardContent>
         </Card>
@@ -36,26 +36,15 @@ const Dashboard = () => {
         <Card sx={{ width: "200px" }}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
-              Monthly Income
+              Total Income
             </Typography>
             <Typography variant="h4" color="success.main">
-              $3,000
+              ${incomes}
             </Typography>
           </CardContent>
         </Card>
       </Grid2>
-      <Grid2 item="true" xs={12} sm={6} md={3}>
-        <Card sx={{ width: "200px" }}>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Savings
-            </Typography>
-            <Typography variant="h4" color="info.main">
-              $2,000
-            </Typography>
-          </CardContent>
-        </Card>
-      </Grid2>
+
       <Grid2 item="true" xs={12}>
         <Card>
           <CardContent>
